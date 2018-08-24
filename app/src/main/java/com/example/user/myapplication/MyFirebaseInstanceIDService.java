@@ -5,7 +5,6 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import org.greenrobot.eventbus.EventBus;
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {

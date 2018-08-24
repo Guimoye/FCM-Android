@@ -17,15 +17,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONObject;
-
 public class MainActivity extends AppCompatActivity {
 
     private EditText nombre,dni;
     private Button btn;
     private Activity activity;
     private String snombre,sdni,token;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         token    =   FirebaseInstanceId.getInstance().getToken();
         activity        =   this;
+
+        if(getIntent().getExtras()!=null){
+           url = getIntent().getExtras().getString("url");
+        }
+
 
         nombre  =   (EditText) findViewById(R.id.nombre);
         dni     =   (EditText) findViewById(R.id.dni);
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 sdni    =   dni.getText().toString();
 
 
+                Log.e("tokeeennn",token);
                 if(snombre.length()!=0 && sdni.length()!=0){
                     Log.e("sqlll","http://beta.focusit.pe/Notificacion/request/ws_register.php?token="+token+"&nombre="+snombre+"&dni="+sdni+"");
                     RequestQueue queue          = Volley.newRequestQueue(activity);
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                                         finish();
                                     }else {
                                         //new MensajeToast().showToast(activity,activity.getResources().getString(R.string.comunicate));
-                                        new Alerts_login(activity,activity.getResources().getString(R.string.comunicate),true);
+                                        new Alert_img(activity,activity.getResources().getString(R.string.comunicate),true);
                                     }
                                 } catch (JSONException e) {e.printStackTrace();}
 
@@ -96,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+      if(url !=null){
+          Log.e("url",url);
+          new Alert_img(activity,url);
+      }
     }
 
 
